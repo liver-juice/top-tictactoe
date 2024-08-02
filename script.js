@@ -29,7 +29,7 @@ function Gameboard(){
 
     const makeMove = (playervalue) => {
         // we prompt the user for their move spot.
-        slot = prompt('enter a slot 1-8.');
+        slot = (prompt('enter a slot 1-9.')) -1; 
 
         // FEEDBACK.
         console.log('Player' + playervalue + ' makes a move : ' + slot);
@@ -80,14 +80,12 @@ function GameController(){
 
     //draw the game
     while (gameOver === false){
+        //while game isnt over, draw board, prompt for move
         board.drawBoard();
         board.makeMove(activePlayer.getValue());
 
-        //------------ this works.
-
-        console.log(activePlayer.getValue());
+        //rotate the guys, check for gg
         rotatePlayers();
-        console.log(activePlayer.getValue());
         gameOver = board.calcWin();
     }
 
