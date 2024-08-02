@@ -7,31 +7,42 @@ function Gameboard(){
     //let rows = 3;
     //let cols = 3;
     // we could loop through rows and cols. but its small enough i make it visually.
-    let board = [[],[],[],
-                 [],[],[],
-                 [],[],[]];
-    //this gives us a 3x3 grid to play on
-
-    //methods
-
-    // what methods should the board have? where will these be used.
-    // show the board.
-    const displayBoard = () => {
-        return board
+    let board = [[0],[0],[0],
+                 [0],[0],[0],
+                 [0],[0],[0]];
+   
+    // get the board.
+    const getBoard = () => {
+        return board;
     }
-    // fill in the slot with users token
+
+    const drawBoard = () => {
+        // draws the game in the console.
+        console.log('#')
+        }
+
+    const calcWin = () => {
+        //calculates if the game is over (win or tie)
+
+        return false;
+    }
+
+    const makeMove = (playervalue) => {
+        let theboard = getBoard();
+        let slot = prompt('enter a slot: 0-8')
+        theboard[slot] = playervalue;
+    }
+    
 
 
-    return {displayBoard};
+    return {getBoard, drawBoard, calcWin, makeMove};
 }
 
 function Player(value=0){
-    // when a token is placed on the board, 
-    // this function assigns it the appropriate value
+    //creates player with a unique value
     value = value;
 
     //methods
-    //get the value
     const getValue = () => {
         return value;
     }
@@ -48,21 +59,32 @@ function GameController(){
     let player1 = Player(1);
     let player2 = Player(2);
 
+    //we set the activePlayer to player 0.
     let players = [player1, player2];
     activePlayer = players[0]
 
-    console.log(activePlayer.getValue());
-    //we set the activePlayer to player 0.
-
-    //makeMove(activePlayer)
-
-    //if nobody has won and space exists, alternatePlayers(),
-
-    //then makeMove(activePlayer)
+    // set the game state (game over = false)
+    let gameOver = board.calcWin();
 
 
+    //draw the game
+    while (gameOver === false){
+        board.drawBoard();
+        board.makeMove(activePlayer.value);
+        rotatePlayers();
+        gameOver = board.calcWin();
+    }
 
-    //methodS
+
+    //methods
+    let rotatePlayers = () => {
+        //swap active players.
+        if (activePlayer === players[0]){
+            activePlayer = players[1];
+        }else{
+            activePlayer = players[0];
+        }
+    }
 
     return {};
 }
