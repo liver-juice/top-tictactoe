@@ -28,9 +28,11 @@ function Gameboard(){
     }
 
     const makeMove = (playervalue) => {
-        let theboard = getBoard();
-        let slot = prompt('enter a slot: 0-8')
-        theboard[slot] = playervalue;
+        // we prompt the user for their move spot.
+        slot = prompt('enter a slot 1-8.');
+
+        // FEEDBACK.
+        console.log('Player' + playervalue + ' makes a move : ' + slot);
     }
     
 
@@ -63,20 +65,6 @@ function GameController(){
     let players = [player1, player2];
     activePlayer = players[0]
 
-    // set the game state (game over = false)
-    let gameOver = board.calcWin();
-
-
-    //draw the game
-    while (gameOver === false){
-        board.drawBoard();
-        board.makeMove(activePlayer.value);
-        rotatePlayers();
-        gameOver = board.calcWin();
-    }
-
-
-    //methods
     let rotatePlayers = () => {
         //swap active players.
         if (activePlayer === players[0]){
@@ -85,6 +73,27 @@ function GameController(){
             activePlayer = players[0];
         }
     }
+
+    // set the game state (game over = false)
+    let gameOver = board.calcWin();
+
+
+    //draw the game
+    while (gameOver === false){
+        board.drawBoard();
+        board.makeMove(activePlayer.getValue());
+
+        //------------ this works.
+
+        console.log(activePlayer.getValue());
+        rotatePlayers();
+        console.log(activePlayer.getValue());
+        gameOver = board.calcWin();
+    }
+
+
+    //methods
+
 
     return {};
 }
