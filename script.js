@@ -18,13 +18,6 @@ function Gameboard(){
 
     // drawBoard function had previously satten here~~~~~~~~~~~~
         
-
-    const calcWin = () => {
-        //calculates if the game is over (win or tie)
-
-        return false;
-    }
-
     const makeMove = (playervalue) => {
         // we prompt the user for their move spot.
         slot = (prompt('enter a slot 1-9.')) -1; 
@@ -35,7 +28,7 @@ function Gameboard(){
     
 
 
-    return {getBoard, calcWin, makeMove};
+    return {getBoard, makeMove};
 }
 
 function Player(value=0){
@@ -94,13 +87,61 @@ function GameController(){
                     currentRow = currentRow + 'o ';
                 }
             })
-            console.log(currentRow);
+            console.log(currentRow + ' |' +Math.random());
         })
-        console.log('---------------')
+        console.log(`~~~~~~ Player${activePlayer.getValue()}'s Turn (slot 1-9):`)
+    }
+
+    const calcWin = () => {
+        //calculates if the game is over (win or tie)
+        let theboard = board.getBoard(); 
+        // THIS IS STRAIGHT ASS!
+        row1=[theboard[0], theboard[1], theboard[2]];
+        row2=[theboard[3], theboard[4], theboard[5]];
+        row3=[theboard[6], theboard[7], theboard[8]];
+
+        // ROW MATCHES.
+        if (theboard[0] === theboard[1] && theboard[1] === theboard[2]){
+            return true; // FIRST ROW.
+        }
+        if (theboard[3] === theboard[4] && theboard[4] === theboard[5]){
+            return true; // SECOND ROW.
+        }
+        if (theboard[6] === theboard[7] && theboard[7] === theboard[8]){
+            return true; // THIRD ROW.
+        }
+        //COL MATCHES.
+        if (theboard[0] === theboard[3] && theboard[3] === theboard[6]){
+            return true; // FIRST ROW.
+        }
+        if (theboard[1] === theboard[4] && theboard[4] === theboard[7]){
+            return true; // SECOND ROW.
+        }
+        if (theboard[2] === theboard[5] && theboard[5] === theboard[8]){
+            return true; // THIRD ROW.
+        }
+
+        //DIAGONALS.
+        if (theboard[0] === theboard[4] && theboard[4] === theboard[8]){
+            return true; // FIRST ROW.
+        }
+        if (theboard[6] === theboard[4] && theboard[4] === theboard[2]){
+            return true; // SECOND ROW.
+        }
+        
+
+
+        // how tf we do this.
+        // define the win patterns as arrays.
+        // if any of them match. its a gg for active player.
+        // if nothing equals 0 and theres no winner. its a tie.
+        
+        
+        return false;
     }
 
     // set the game state (game over = false)
-    let gameOver = board.calcWin();
+    let gameOver = calcWin();
 
 
     //draw the game
@@ -111,12 +152,17 @@ function GameController(){
 
         //rotate the guys, check for gg
         rotatePlayers();
-        gameOver = board.calcWin();
+        gameOver = calcWin();
+    }
+    if (gameOver === true){
+        rotatePlayers(); // we rerotate back to the winner.
+        drawBoard();
+        console.log(`Player${activePlayer.getValue()} has won!`)
     }
 
 
     //methods
-
+1
 
     return {};
 }
