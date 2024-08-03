@@ -16,10 +16,8 @@ function Gameboard(){
         return board;
     }
 
-    const drawBoard = () => {
-        // draws the game in the console.
-        console.log('#')
-        }
+    // drawBoard function had previously satten here~~~~~~~~~~~~
+        
 
     const calcWin = () => {
         //calculates if the game is over (win or tie)
@@ -32,12 +30,12 @@ function Gameboard(){
         slot = (prompt('enter a slot 1-9.')) -1; 
 
         // FEEDBACK.
-        console.log('Player' + playervalue + ' makes a move : ' + slot);
+        board[slot] = playervalue;
     }
     
 
 
-    return {getBoard, drawBoard, calcWin, makeMove};
+    return {getBoard, calcWin, makeMove};
 }
 
 function Player(value=0){
@@ -74,6 +72,33 @@ function GameController(){
         }
     }
 
+    let drawBoard = () => {
+        // draws the game in the console.
+        // we make the 3 rows.
+        let theboard = board.getBoard(); 
+        row1=[theboard[0], theboard[1], theboard[2]];
+        row2=[theboard[3], theboard[4], theboard[5]];
+        row3=[theboard[6], theboard[7], theboard[8]];
+        //then we print the rows
+        theRows = [row1, row2, row3];
+        theRows.forEach((row) =>{
+            currentRow = "";
+            row.forEach((slot) =>{
+                if (slot == '0'){
+                    currentRow = currentRow + '- ';
+                }
+                if (slot == '1'){
+                    currentRow = currentRow + 'x ';
+                }
+                if (slot == '2'){
+                    currentRow = currentRow + 'o ';
+                }
+            })
+            console.log(currentRow);
+        })
+        console.log('---------------')
+    }
+
     // set the game state (game over = false)
     let gameOver = board.calcWin();
 
@@ -81,7 +106,7 @@ function GameController(){
     //draw the game
     while (gameOver === false){
         //while game isnt over, draw board, prompt for move
-        board.drawBoard();
+        drawBoard();
         board.makeMove(activePlayer.getValue());
 
         //rotate the guys, check for gg
