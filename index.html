@@ -13,12 +13,16 @@
 </head>
 <body>
     <div class="header">
-        <p class="player1score">Player1: 0</p>
+        <p class="player1scorediv">Player1: <span class="p1score">0</span></p>
         <h1 class="headerlogo">Tic Tac Toe</h1>
-        <p class="player2score">Player2: 0</p>
+        <p class="player2scorediv">Player2: <span class="p2score">0</span></p>
     </div>
     <div class="content">
+
+        <div class="winnercontainer"></div>
+
         <div class="boardcontainer">
+
            <div class="slot top diagonal1 col1">
             
            </div>
@@ -47,6 +51,7 @@
             
            </div>
         </div>
+        <button class="resetgame">Reset</button>
     </div>
     <script src="script.js"></script>
 </body>

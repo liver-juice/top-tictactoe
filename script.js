@@ -6,9 +6,19 @@
 function Gameboard(){
     // creates the board itself
 
-    let board = [[0],[0],[0],
-                 [0],[0],[0],
-                 [0],[0],[0]];
+            //ROWS
+        const toprow = Array.from(document.querySelectorAll('.top'));
+        const midrow = Array.from(document.querySelectorAll('.mid'));
+        const bottomrow = Array.from(document.querySelectorAll('.bottom'));
+            //COLS
+        const col1 = Array.from(document.querySelectorAll('.col1'));
+        const col2 = Array.from(document.querySelectorAll('.col2'));
+        const col3 = Array.from(document.querySelectorAll('.col3'));
+            //DIAGONALS
+        const diagonal1 = Array.from(document.querySelectorAll('.diagonal1'));
+        const diagonal2 = Array.from(document.querySelectorAll('.diagonal2'));
+    
+        let board = [toprow, midrow, bottomrow, col1, col2, col3, diagonal1, diagonal2];
    
     // get the board.
     const getBoard = () => {
@@ -40,16 +50,21 @@ function Gameboard(){
     return {getBoard, makeMove};
 }
 
-function Player(value=0){
+function Player(value){
     //creates player with a unique value
     value = value;
+    score = 0;
 
     //methods
     const getValue = () => {
         return value;
     }
 
-    return {getValue};
+    const getScore = () => {
+        return score;
+    }
+
+    return {getValue, getScore};
 }
 
 function GameController(){
@@ -80,27 +95,37 @@ function GameController(){
 
 
     const calcWin = () => {
-        //ROWS
-        const toprow = Array.from(document.querySelectorAll('.top'));
-        const midrow = Array.from(document.querySelectorAll('.mid'));
-        const bottomrow = Array.from(document.querySelectorAll('.bottom'));
-        //COLS
-        const col1 = Array.from(document.querySelectorAll('.col1'));
-        const col2 = Array.from(document.querySelectorAll('.col2'));
-        const col3 = Array.from(document.querySelectorAll('.col3'));
-        //DIAGONALS
-        const diagonal1 = Array.from(document.querySelectorAll('.diagonal1'));
-        const diagonal2 = Array.from(document.querySelectorAll('.diagonal2'));
-
-        let wins = [toprow, midrow, bottomrow, col1, col2, col3, diagonal1, diagonal2];
+        wins = board.getBoard();
 
         wins.forEach((nodelist)=>{
             const [node1, node2, node3] = nodelist.map(node => node.innerHTML);
 
              if (node1 && node1 === node2 && node2 === node3){
-                console.log('matcher')
                 if (node1 == "x" || node1 == "o"){
-                    console.log('win win win win. fuck everything else.');
+                    // THIS WORKS.---
+                    console.log('game over');
+                    let winnercontainer = document.querySelector('.winnercontainer');
+                    let winningPlayer = activePlayer.getValue();
+
+                    // if player1 wins, set color to red, else blue.
+                    if (winningPlayer === 1){
+                        winnercontainer.style.color = "red";
+                        //increment the winner score
+                        let newScore = activePlayer.getScore() + 1;
+                        let p1score = document.querySelector('.p1score');
+                        p1score.textContent = newScore;
+                    }else if (winningPlayer === 2){
+                        winnercontainer.style.color = "blue";
+                        //increment the winner score
+                        let newScore = activePlayer.getScore() + 1;
+                        p2score = document.querySelector('.p2score');
+                        p2score.textContent = newScore;
+                    }
+                    
+                    // log the winner
+                    winnercontainer.innerHTML = `Player ${winningPlayer} wins!`;
+
+                    
                 }else{
                 
                 }   
@@ -116,8 +141,8 @@ function GameController(){
     slots.forEach((slot)=>{
         slot.addEventListener('click', () =>{
             board.makeMove(slot, activePlayer.getValue())
-            rotatePlayers();
             calcWin();
+            rotatePlayers();
         });
     });
 
@@ -131,4 +156,7 @@ function GameController(){
 // Gamecontroller is like the master. when we call gamecontroller it does everything.
 
 let game = GameController();
+
+// reset button just calls the gamecontroller again and works right? (surely)
+// no.
 
