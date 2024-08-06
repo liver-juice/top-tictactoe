@@ -146,8 +146,16 @@ function GameController(){
         });
     });
 
+    let resetBoard = () => {
+        //resets the board goofy.
+        let theslots = document.querySelectorAll('.slot');
+        theslots.forEach((slot) => {
+            slot.textContent = "";
+        })
+    }
 
-
+    let resetbtn = document.querySelector('.resetgame');
+    resetbtn.addEventListener('click', resetBoard);
 
     return {};
 }
