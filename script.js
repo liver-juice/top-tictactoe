@@ -140,9 +140,14 @@ function GameController(){
     let slots = document.querySelectorAll('.slot');
     slots.forEach((slot)=>{
         slot.addEventListener('click', () =>{
+            slot.textContent = "";
+            if (slot.textContent !== ""){
+               
+            }else {
             board.makeMove(slot, activePlayer.getValue())
             calcWin();
             rotatePlayers();
+        }
         });
     });
 
@@ -152,10 +157,16 @@ function GameController(){
         theslots.forEach((slot) => {
             slot.textContent = "";
         })
+
+        //clear the winner header.
+        let winnercontainer = document.querySelector('.winnercontainer');
+        winnercontainer.textContent = "";
     }
 
     let resetbtn = document.querySelector('.resetgame');
     resetbtn.addEventListener('click', resetBoard);
+
+    
 
     return {};
 }
