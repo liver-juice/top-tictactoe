@@ -81,25 +81,29 @@ function GameController(){
 
     const calcWin = () => {
         //ROWS
-        let toprow = document.querySelectorAll('.top');
-        let midrow = document.querySelectorAll('.mid');
-        let bottomrow = document.querySelectorAll('.bottom');
+        const toprow = Array.from(document.querySelectorAll('.top'));
+        const midrow = Array.from(document.querySelectorAll('.mid'));
+        const bottomrow = Array.from(document.querySelectorAll('.bottom'));
         //COLS
-        let col1 = document.querySelectorAll('.col1');
-        let col2 = document.querySelectorAll('.col2');
-        let col3 = document.querySelectorAll('.col3');
+        const col1 = Array.from(document.querySelectorAll('.col1'));
+        const col2 = Array.from(document.querySelectorAll('.col2'));
+        const col3 = Array.from(document.querySelectorAll('.col3'));
         //DIAGONALS
-        let diagonal1 = document.querySelectorAll('.diagonal1');
-        let diagonal2 = document.querySelectorAll('.diagonal2');
+        const diagonal1 = Array.from(document.querySelectorAll('.diagonal1'));
+        const diagonal2 = Array.from(document.querySelectorAll('.diagonal2'));
 
         let wins = [toprow, midrow, bottomrow, col1, col2, col3, diagonal1, diagonal2];
 
         wins.forEach((nodelist)=>{
-            let node1 = nodelist[0].innerHTML;
-            let node2 = nodelist[1].innerHTML;
-            let node3 = nodelist[2].innerHTML;
-            if (node1 === node2 && node2 === node3){
-                console.log('win win win win. fuck everything else.');
+            const [node1, node2, node3] = nodelist.map(node => node.innerHTML);
+
+             if (node1 && node1 === node2 && node2 === node3){
+                console.log('matcher')
+                if (node1 == "x" || node1 == "o"){
+                    console.log('win win win win. fuck everything else.');
+                }else{
+                
+                }   
             }
         })
         // this function will be ran every time a slot is clicked.
